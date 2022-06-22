@@ -1,0 +1,3 @@
+MongoDB 
+username : Admin
+password : admin1234
