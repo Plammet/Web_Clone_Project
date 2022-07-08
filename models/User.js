@@ -57,7 +57,7 @@ userSchema.methods.comparePassword = function(plainPassword, callback){
 userSchema.methods.generateToken = function(callback){
     var user = this;
 
-    var token = jwt.sign(user._id.toHexString(), 'token')
+    var token = jwt.sign(user._id.toHexString(), 'secretToken')
 
     user.token = token;
     user.save(function(err, user){
@@ -65,6 +65,20 @@ userSchema.methods.generateToken = function(callback){
         callback(null, user)
     })
 }
+
+userSchema.statics.findByToken = function(token, callback){
+    var user = this;
+
+    jwt.verify(token, 'secretToken', function(err, decoded){
+
+        user.findOne({"_id":decoded, "token":token}, function(err, user){
+                if(err) return callback(err);
+                callback(null, user)
+        })
+    })
+}
+
+
 
 const User = mongoose.model('User', userSchema)
 module.exports = {User}
