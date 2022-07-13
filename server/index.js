@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 4000
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { auth } = require('./middleware/auth'); 
@@ -68,7 +68,6 @@ app.get('/api/users/auth', auth , (req, res) =>{
     image : req.user.image
   })
 })
-
 app.get('/api/users/logout', auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id}, 
     {token:""},
