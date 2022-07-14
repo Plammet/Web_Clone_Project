@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.post('api/users/register',  (req, res) => {
+app.post('/api/users/register',  (req, res) => {
   // 회원가입 정보를 client에서 받아와서 DB에 삽입
 
   const user = new User(req.body)
@@ -59,7 +59,7 @@ app.post('/api/users/login', (req, res) => {
 app.get('/api/users/auth', auth , (req, res) =>{
   // authentication 성공했다는 것을 클라이언트에 전달
   res.status(200).json({
-    _id : req.secret._id, 
+    _id : req.user._id, 
     isAdmin : req.user.role === 0? false : true,
     isAuth : true,
     email : req.user.email,
